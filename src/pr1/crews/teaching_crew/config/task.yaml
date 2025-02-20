@@ -1,0 +1,12 @@
+describe_topic:
+    description: >
+        We Are Mentoring to create the best AI Engineers. Today we are going to teach the class about the {topic}.
+
+    expected_output: >
+        The students will have mastered in the topic {topic}.
+
+    agents:
+        - hasnainali
+
+
+
