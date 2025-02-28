@@ -49,106 +49,76 @@ class TeachingCrew:
         )
 
 
-import streamlit as st
-from fpdf import FPDF
-
-
-st.title("Welcome to Teaching Assistant")
-
-
 
 import streamlit as st
-from fpdf import FPDF
 import os
 
 # User input
-user_input = st.text_area("Enter your topic", height=150)
 
-if st.button("Generate Topic"):
-    if not user_input.strip():  # Check if input is empty or just spaces
-        st.error("Please enter a valid topic.")
+
+
+# 🌟 App Title
+st.markdown("<h1 style='text-align: center; color: #4CAF50;'>📚 Welcome to Teaching Assistant</h1>", unsafe_allow_html=True)
+
+user_input = st.text_input("🖋️ Enter your topic")
+
+if st.button("✨ Generate Topic"):
+    if not user_input.strip():
+        st.error("⚠️ Please enter a valid topic.")
     else:
-        st.write(f"Generating Content for {user_input}")
-        with st.spinner("Generating Content..."):
+        st.success(f"📝 Generating Content for **{user_input}**")
+
+        with st.spinner("⏳ Generating Content..."):
             try:
                 # Fetch response
                 result = TeachingCrew(user_input).get_crew().kickoff()
                 response = result.raw
-                
-                if not response:  # Ensure response is not empty
-                    st.error("No content generated. Please try again with a different topic.")
+
+                if not response:
+                    st.error("❌ No content generated. Try a different topic.")
                 else:
+                    # 🖊️ Display Content
+                    st.subheader("📜 Generated Content")
                     st.write(response)
-                    file_name = "content.pdf"
-                    
+
+                    file_name = "content.txt"
+
                     try:
-                        # Create PDF instance
-                        class PDF(FPDF):
-                            def header(self):
-                                self.set_font("Arial", "B", 14)
-                                self.cell(0, 10, "Generated PDF", ln=True, align="C")
-                                self.ln(5)
+                        # ✅ Format Content & Save as TXT
+                        with open(file_name, "w", encoding="utf-8") as f:
+                            for line in response.split("\n"):
+                                if line.startswith("# "):
+                                    f.write(f"\n📖 {line[2:]}\n" + "=" * 40 + "\n")
+                                elif line.startswith("## "):
+                                    f.write(f"\n🔹 {line[3:]}\n" + "-" * 30 + "\n")
+                                elif line.startswith("### "):
+                                    f.write(f"\n🔸 {line[4:]}\n")
+                                elif line.startswith("* "):
+                                    f.write(f"   ➤ {line[2:]}\n")
+                                elif line.startswith("    * "):
+                                    f.write(f"      - {line[6:]}\n")
+                                else:
+                                    f.write(line + "\n")
 
-                        pdf = PDF()
-                        pdf.set_auto_page_break(auto=True, margin=15)
-                        pdf.add_page()
-                        
-                        # Set font
-                        pdf.set_font("Arial", "", 12)
-                        
-                        # Proper formatting for structured text
-                        for line in response.split("\n"):
-                            if line.startswith("# "):  # Title
-                                pdf.set_font("Arial", "B", 16)
-                                pdf.cell(0, 10, line[2:], ln=True, align="C")
-                                pdf.ln(5)
-                            elif line.startswith("## "):  # Module
-                                pdf.set_font("Arial", "B", 14)
-                                pdf.cell(0, 10, line[3:], ln=True)
-                                pdf.ln(3)
-                            elif line.startswith("### "):  # Section
-                                pdf.set_font("Arial", "B", 12)
-                                pdf.cell(0, 10, line[4:], ln=True)
-                            elif line.startswith("* "):  # Bullet Points
-                                pdf.set_font("Arial", "", 12)
-                                pdf.cell(10)  # Indentation
-                                pdf.multi_cell(0, 10, "- " + line[2:])  # Replace • with -
-                            elif line.startswith("    * "):  # Sub-bullet points
-                                pdf.set_font("Arial", "", 12)
-                                pdf.cell(20)  # More Indentation
-                                pdf.multi_cell(0, 10, "  - " + line[6:])  # Replace • with -
-                            else:
-                                pdf.set_font("Arial", "", 12)
-                                pdf.multi_cell(0, 10, line)
-
-                        # Save PDF file
-                        pdf.output(file_name, "F")
-
-                        # Read the PDF in binary mode for download
+                        # ✅ Download Button
                         with open(file_name, "rb") as f:
                             st.download_button(
-                                label="Download Content as PDF",
+                                label="📥 Download Content as TXT",
                                 data=f,
                                 file_name=file_name,
-                                mime="application/pdf",
+                                mime="text/plain",
                             )
 
                     except Exception as e:
-                        st.error(f"An error occurred while generating the PDF: {str(e)}")
-                    
+                        st.error(f"⚠️ Error while saving the TXT file: {e}")
+
                     finally:
-                        # Clean up file after download
+                        # Cleanup file after download
                         if os.path.exists(file_name):
                             os.remove(file_name)
-            
+
             except Exception as e:
-                st.error(f"An error occurred while generating content: {str(e)}")
-
-
-
-# up
-
-
+                st.error(f"🚨 Error generating content: {e}")
 
 
 
