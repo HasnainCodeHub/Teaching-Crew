@@ -58,7 +58,8 @@ import os
 
 
 # 🌟 App Title
-st.markdown("<h1 style='text-align: center; color: #4CAF50;'>📚 Welcome to Teaching Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #4CAF50;'>📚 Welcome to Hasnain's Agentia World</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: #4CAF50;'>🌟 An AI Powered Teacher </h2>", unsafe_allow_html=True)
 suggested_queries = [
     "Agentic AI",
     "Generative AI",
@@ -67,12 +68,12 @@ suggested_queries = [
     "Finance",
 ]
 
-st.write("### Suggested Queries:")
+st.write("### Suggested Topics:")
 for query in suggested_queries:
     st.write(f"- {query}")
 user_input = st.text_input("🖋️ Enter your topic")
 
-if st.button("✨ Generate Topic"):
+if st.button("✨ Generate Content"):
     if not user_input.strip():
         st.error("⚠️ Please enter a valid topic.")
     else:
