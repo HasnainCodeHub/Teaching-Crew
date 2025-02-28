@@ -59,7 +59,17 @@ import os
 
 # 🌟 App Title
 st.markdown("<h1 style='text-align: center; color: #4CAF50;'>📚 Welcome to Teaching Assistant</h1>", unsafe_allow_html=True)
+suggested_queries = [
+    "Agentic AI",
+    "Generative AI",
+    "Machine Learning",
+    "Medical Science",
+    "Finance",
+]
 
+st.write("### Suggested Queries:")
+for query in suggested_queries:
+    st.write(f"- {query}")
 user_input = st.text_input("🖋️ Enter your topic")
 
 if st.button("✨ Generate Topic"):
@@ -132,7 +142,42 @@ if st.button("✨ Generate Topic"):
 
 
 
+st.sidebar.title("Description:")
+st.sidebar.info(
+    """
+    🎓 Welcome to Hasnain's Teaching Assistant – an AI-powered content generator designed to simplify learning material creation. 
+    
+    This intelligent assistant leverages **Crew AI with Gemini Flash 2.0** to generate well-structured educational content based on your topic.
+    
+    🔹 **How It Works:**
+    
+    1️⃣ **Enter a Topic** – Provide a subject or concept for content generation.  
+    2️⃣ **AI-Powered Content Generation** – The system processes your request with specialized AI agents:  
+        
+        ✍️ **Content Creator Agent** – Generates structured educational material.  
+        🧐 **Content Reviewer Agent** – Enhances clarity and coherence.  
+    
+    3️⃣ **Instant Output & Download** – View the content instantly and download it as a **TXT file** for further use.
+    
+    🚀 **Features:**
+    
+    ✅ Generates structured learning content (titles, modules, bullet points)  
+    ✅ Supports diverse topics across multiple domains  
+    ✅ AI-assisted quality review for clear and concise content  
+    ✅ Quick topic suggestions for inspiration  
+    ✅ One-click download as a **TXT file** 📥  
+    
+    Start creating high-quality educational content with AI! 🚀
+    """
+)
 
+
+
+st.sidebar.markdown("### Connect with Hasnain")
+st.sidebar.write("[LinkedIn](https://www.linkedin.com/in/hasnain-ali-developer/)")
+st.sidebar.write("[GitHub](https://github.com/HasnainCodeHub)")
+st.sidebar.write("[Instagram](https://www.instagram.com/i_hasnainaliofficial/)")
+st.sidebar.write("[Facebook](https://www.facebook.com/hasnainazeem.hasnainazeem.1)")
 
 
 
